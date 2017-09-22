@@ -322,10 +322,10 @@ class TLDetector(object):
         # Won't be available in the real run.
         # In future, will need to capture images and use machine vision
         # to determine the state
-        #I commented these 3 lines out for my traffic light updater
-        #use_true_value = True
-        #if use_true_value:
-        #    return light.state
+        #I will commented these next 3 lines out if you want to see the results of the traffic light updater
+        use_true_value = True
+        if use_true_value:
+            return light.state
 
 
         if(not self.has_image):
