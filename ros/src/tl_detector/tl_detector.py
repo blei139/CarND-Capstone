@@ -278,20 +278,20 @@ class TLDetector(object):
         #print("Brightest spot, brightx: {}, birghty: {}".format(brightx, brighty)) 
 
 
-	    #color hsv range boolean
+	#color hsv range boolean
         greenColor = np.all(lower_HSV == np.array([60, 125, 125])) and np.all(upper_HSV == np.array([120,255,255]))
         redColor = np.all(lower_HSV == np.array([170, 125, 125])) and np.all(upper_HSV == np.array([179,255,255]))
         yellowColor = np.all(lower_HSV == np.array([5, 150, 150])) and np.all(upper_HSV == np.array([40,255,255]))
 
         if (((brightx == 0) and (brighty == 0)) == False):
             if (greenColor == True):
-		        print("*******************Green Traffic Light**************")
+		print("*******************Green Traffic Light**************")
                 cv2.rectangle(img, (brightx -15, brighty - 15), (brightx + 15, brighty + 15), (255,0,0),2)
                 cv2.putText(img, "green traffic light", (brightx-15, brighty -27), 0, 1.2, (255,0,0),2)
                 colorID = TrafficLight.GREEN
                 print("colorID: TrafficLight.GREEN or color ID index: {}".format(TrafficLight.GREEN))
             elif (redColor == True):
-		        print("*******************Red Traffic Light**************")
+		print("*******************Red Traffic Light**************")
                 cv2.rectangle(img, (brightx -15, brighty - 15), (brightx + 15, brighty + 15), (255,0,0),2)
                 cv2.putText(img, "red traffic light", (brightx-15, brighty -27), 0, 1.2, (255,0,0),2)
                 colorID = TrafficLight.RED
@@ -378,9 +378,9 @@ class TLDetector(object):
         greenLight = False
         redLight = False
 
-	    #The size of one traffic light is about 50 in x direction,125 in y direction
-	    #The center of the image is:
-	    x = cv_image.shape[1]/2 #u
+	#The size of one traffic light is about 50 in x direction,125 in y direction
+	#The center of the image is:
+	x = cv_image.shape[1]/2 #u
         y = cv_image.shape[0]/2 #v
         
 
@@ -425,7 +425,7 @@ class TLDetector(object):
         elif ((yellowLight == False) and (redLight == False) 
              and (greenLight == True)):
             clr_ID = TrafficLight.GREEN
-	    else:
+	else:
             clr_ID = TrafficLight.UNKNOWN
         
         print("Traffic Light color_ID: {}".format(clr_ID))
