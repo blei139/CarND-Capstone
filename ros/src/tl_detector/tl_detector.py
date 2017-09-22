@@ -297,7 +297,7 @@ class TLDetector(object):
                 colorID = TrafficLight.RED
                 print("colorID: TrafficLight.RED or color ID index: {}".format(TrafficLight.RED))
             elif (yellowColor == True):
-		        print("*******************Yellow Traffic Light**************")
+		print("*******************Yellow Traffic Light**************")
                 cv2.rectangle(img, (brightx -15, brighty - 15), (brightx + 15, brighty + 15), (255,0,0),2)
                 cv2.putText(img, "yellow traffic light", (brightx-15, brighty -27), 0, 1.2, (255,0,0),2)
               
