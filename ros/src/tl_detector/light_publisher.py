@@ -57,7 +57,7 @@ class TLPublisher(object):
         pose.pose.orientation = Quaternion(*q)
 
         return pose
-
+   
 
 if __name__ == '__main__':
     try:
