@@ -5,5 +5,7 @@ camera_info:
   image_height: 600
 stop_line_positions:
     - [20.991, 22.837]
+color_mode: carla
+
 
 
