@@ -103,3 +103,7 @@ class DBWTestNode(object):
 
 if __name__ == '__main__':
     DBWTestNode()
+
+
+if __name__ == '__main__':
+    DBWTestNode()
