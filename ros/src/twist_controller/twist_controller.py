@@ -10,22 +10,22 @@ class Controller(object):
     def __init__(self, *args, **kwargs):
 
         self.__dict__.update(kwargs)
+        # print 'Controller: max_steer',self.max_steer_angle,'max_throttle',self.max_throttle,'max_brake',self.max_brake
 
-        kp = -0.2
+        kp = -5.0
         ki = -0.05
-        kd = -3.0
-        self.spidcontroller = PID(kp, ki, kd, 0., 1.)
+        kd = -5.0
+        self.spidcontroller = PID(kp, ki, kd, -self.max_brake, self.max_throttle)
 
-        kp = -0.2
+        kp = -1.0 #-0.2
         ki = -0.05
-        kd = -3.0
-        self.max_steer_angle = 0.61 # 35 degrees
+        kd = -20.0
         self.pidcontroller = PID(kp, ki, kd, -self.max_steer_angle, self.max_steer_angle)
 
         min_speed = 0.0
         self.yawcontroller = YawController(self.wheel_base, self.steer_ratio, min_speed, self.max_lat_accel, self.max_steer_angle)
 
-        self.pedal = 1.0
+        self.pedal = self.max_throttle
 
     def control(self, *args): #, **kwargs):
 
@@ -37,10 +37,7 @@ class Controller(object):
         current_velocity = args[4]
 
         # Throttle - PID control
-        if (current_velocity==0.0):
-            pedal = 1.0
-        else:
-            pedal = self.spidcontroller.step(current_velocity-linear_velocity, delta_time)
+        pedal = self.spidcontroller.step(current_velocity-linear_velocity, delta_time)
 
         if (pedal>0):
             throttle = pedal
@@ -48,15 +45,21 @@ class Controller(object):
         else:
             throttle = 0.0
             brake = -pedal
+            # Keep car stopped since car will naturally creep forward.
+            if current_velocity < 0.2:
+                brake = 0.1
 
-        # Steer - PID control
-        steer_pid = self.pidcontroller.step(cte, delta_time)
+        # Steer
+        if (current_velocity==0.0):
+            steer = 0.0
 
-        # Steer - YAW control
-        steer_yaw = self.yawcontroller.get_steering(linear_velocity, angular_velocity, current_velocity)
+        else:
+            # Steer - PID control
+            steer_pid = self.pidcontroller.step(cte, delta_time)
 
-        steer = steer_pid + steer_yaw
+            # Steer - YAW control
+            steer_yaw = self.yawcontroller.get_steering(linear_velocity, angular_velocity, current_velocity)
 
-        # print 'cte ' + str(cte) + ' -> steer ' + str(steer_pid) + ' + ' + str(steer_yaw) + ' pedal ' + str(self.pedal)
+            steer = steer_pid + steer_yaw
 
         return throttle, brake, steer
