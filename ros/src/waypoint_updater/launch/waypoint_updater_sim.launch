@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="waypoint_updater" type="waypoint_updater.py" name="waypoint_updater" output="screen">
+        <param name="green_light_time" value="2.00" />
+        <param name="stop_distance" value="37.00" />
+        <param name="stop_buffer" value="-3.0" />
+    </node>
+</launch>
